@@ -17,7 +17,3 @@ type ApiConfig struct {
 }
 
 type ApiConfigOpt func(*ApiConfig) *ApiConfig
-
-type AiService interface {
-	Generate(string) (*string, error)
-}

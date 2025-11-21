@@ -67,19 +67,12 @@ func (m *MsService) Report(filter FilterArgs) ([]string, error) {
 		return nil, fmt.Errorf("provider %s is not currently implemented", m.apiConfig.ApiProvider)
 	}
 	aiService := aiServiceFn(m.apiConfig)
-	output, err := aiService.Generate(strings.Join(commits, "\n"))
-	if err != nil {
-		return nil, err
-	}
 
-	return []string{*output}, nil
+	final, err := aiService.Generate(strings.Join(commits, "\n\n"))
+
+	return []string{*final}, err
 }
 
-func NewMsService(opts ...ApiConfigOpt) *MsService {
-	apiConfig := &ApiConfig{}
-	for _, opt := range opts {
-		opt(apiConfig)
-	}
-
+func NewMsService(apiConfig *ApiConfig) *MsService {
 	return &MsService{apiConfig: apiConfig}
 }

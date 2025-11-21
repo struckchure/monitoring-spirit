@@ -5,7 +5,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/charmbracelet/glamour"
 	"github.com/jinzhu/now"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
@@ -56,11 +55,7 @@ var reportCmd = &cobra.Command{
 			log.Panic(err)
 		}
 
-		out, err := glamour.Render(strings.Join(output, "\n"), "dark")
-		if err != nil {
-			log.Fatal(err)
-		}
-		println(out)
+		println(ms.RenderMarkdown(strings.Join(output, "\n")))
 	},
 }
 

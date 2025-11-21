@@ -19,15 +19,14 @@ var rootCmd = &cobra.Command{
 	Use:   "ms",
 	Short: "Generate work reports based on your git commits with monitoring spirit.",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		msService = ms.NewMsService(func(ac *ms.ApiConfig) *ms.ApiConfig {
-			ac.Model = model
-			ac.ApiUrl = apiUrl
-			ac.ApiKey = apiKey
-			ac.ApiProvider = ms.ApiProviderType(apiProvider)
-			ac.PromptType = ms.PromptType(promptType)
-
-			return ac
-		})
+		apiConfig := &ms.ApiConfig{
+			Model:       model,
+			ApiUrl:      apiUrl,
+			ApiKey:      apiKey,
+			ApiProvider: ms.ApiProviderType(apiProvider),
+			PromptType:  ms.PromptType(promptType),
+		}
+		msService = ms.NewMsService(apiConfig)
 	},
 }
 
