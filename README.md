@@ -16,8 +16,8 @@ graph TD
     Start[Start: ms report] --> Init[Initialize Config & Flags]
     Init --> LoadPrompt[Load System Prompt]
     Init --> GitOps[Read Git Repository]
-    GitOps --> Filter[Filter Commits\n(Date, Author, etc.)]
-    Filter --> Context[Prepare Context\n(Commit Messages)]
+    GitOps --> Filter[Filter Commits<br/>Date, Author, etc.]
+    Filter --> Context[Prepare Context<br/>Commit Messages]
     LoadPrompt --> AI[AI Processing]
     Context --> AI
     AI --> Provider{AI Provider}
