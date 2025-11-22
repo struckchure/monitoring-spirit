@@ -67,6 +67,6 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&apiUrl, "api-url", "u", "", "Api Url")
 	rootCmd.PersistentFlags().StringVarP(&apiKey, "api-key", "k", "", "Api Key")
 	rootCmd.PersistentFlags().StringVarP(&apiProvider, "api-provider", "p", "ollama", "Api Provider (ollama, llmstudio)")
-	rootCmd.PersistentFlags().StringVar(&promptType, "prompt-type", "default", "Prompt Type (default, technical, non-technical)")
+	rootCmd.PersistentFlags().StringVar(&promptType, "prompt-type", "default", "Prompt Type (default, technical, non-technical, neutral)")
 	rootCmd.PersistentFlags().StringVar(&promptsDirOVerride, "prompt-dir", "", "Prompt Directory")
 }

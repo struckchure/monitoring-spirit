@@ -9,6 +9,25 @@ Monitoring Spirit is a CLI tool designed to generate work reports based on your 
 - **Customizable Prompts**: Choose between default, technical, or non-technical prompt styles.
 - **Flexible Filtering**: Filter commits by date range, specific commit hashes, or author email.
 
+## How It Works
+
+```mermaid
+graph TD
+    Start[Start: ms report] --> Init[Initialize Config & Flags]
+    Init --> LoadPrompt[Load System Prompt]
+    Init --> GitOps[Read Git Repository]
+    GitOps --> Filter[Filter Commits\n(Date, Author, etc.)]
+    Filter --> Context[Prepare Context\n(Commit Messages)]
+    LoadPrompt --> AI[AI Processing]
+    Context --> AI
+    AI --> Provider{AI Provider}
+    Provider -->|Ollama| Ollama[Ollama API]
+    Provider -->|LLM Studio| LLM[LLM Studio API]
+    Ollama --> Response[Generate Report]
+    LLM --> Response
+    Response --> Output[Print Markdown to Stdout]
+```
+
 ## Installation
 
 Ensure you have Go installed on your machine.
@@ -41,7 +60,8 @@ ms [command] [flags]
 | `--api-url` | `-u` | The API URL for the provider | |
 | `--api-key` | `-k` | API Key (if required) | |
 | `--api-provider` | `-p` | AI Provider (`ollama`, `llmstudio`) | `ollama` |
-| `--prompt-type` | | Prompt style (`default`, `technical`, `non-technical`) | `default` |
+| `--prompt-type` | | Prompt style (`default`, `technical`, `non-technical`, `neutral`) | `default` |
+| `--prompt-dir` | | Directory containing custom prompt files | |
 
 ### Commands
 
@@ -91,3 +111,31 @@ You can set the `GIT_DIR` environment variable to specify the path to the git re
 export GIT_DIR=/path/to/your/repo
 ms report ...
 ```
+
+## Prompt Customization
+
+Monitoring Spirit allows you to customize the prompts used to generate reports. You can use the built-in prompt types or provide your own custom prompts.
+
+### Built-in Prompts
+
+Use the `--prompt-type` flag to select a built-in prompt:
+
+- **`default`**: A balanced report suitable for most stakeholders. It combines high-level summaries with enough technical context to be useful for mixed audiences.
+- **`technical`**: Designed for engineers and technical leads. It focuses on implementation details, code structure, refactoring, and specific technologies used.
+- **`non-technical`**: Tailored for product managers and non-technical stakeholders. It translates technical work into business value, focusing on features, stability, and user impact without jargon.
+- **`neutral`**: A variation of the balanced report with a strictly neutral and objective tone, avoiding any subjective language.
+
+### Custom Prompts
+
+To use your own prompts, you can specify a directory containing markdown files with your custom prompts using the `--prompt-dir` flag.
+
+1. Create a directory for your prompts (e.g., `my-prompts/`).
+2. Create a markdown file inside that directory (e.g., `custom.md`).
+3. Run the command specifying the directory and the prompt filename (without extension) as the prompt type.
+
+```bash
+ms report --prompt-dir ./my-prompts --prompt-type custom
+```
+
+The prompt file should contain instructions for the AI on how to format and generate the report.
+
