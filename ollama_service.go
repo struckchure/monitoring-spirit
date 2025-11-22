@@ -39,7 +39,7 @@ func (o *OllamaService) Summarize(input string) (*string, error) {
 func (o *OllamaService) Generate(input string) (*string, error) {
 	response, err := o.ai(OllamaGenerateRequest{
 		Model:  o.apiConfig.Model,
-		System: aiPromptMapping[o.apiConfig.PromptType],
+		System: o.apiConfig.Prompt,
 		Prompt: input,
 	})
 	if err != nil {
@@ -50,7 +50,6 @@ func (o *OllamaService) Generate(input string) (*string, error) {
 }
 
 func NewOllamaService(apiConfig *ApiConfig) AiService {
-	apiConfig.PromptType = lo.Ternary(lo.IsEmpty(apiConfig.PromptType), PromptTypeDefault, apiConfig.PromptType)
 	apiConfig.Model = lo.Ternary(lo.IsEmpty(apiConfig.Model), "gemma3:1b", apiConfig.Model)
 	apiConfig.ApiUrl = lo.Ternary(lo.IsEmpty(apiConfig.ApiUrl), "http://localhost:11434", apiConfig.ApiUrl)
 

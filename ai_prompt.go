@@ -1,17 +1,5 @@
 package ms
 
-type PromptType string
-
-var (
-	PromptTypeDefault      PromptType = "default"
-	PromptTypeTechnical    PromptType = "technical"
-	PromptTypeNonTechnical PromptType = "non-technical"
-)
-
-var aiPromptMapping = map[PromptType]string{
-	PromptTypeDefault: defaultPrompt,
-}
-
 var commitSummarizerPrompt = `You are a commit analyzer that extracts essential context from git commits for report generation.
 
 Your task is to summarize the provided git commits, extracting only the important information needed for a weekly report.

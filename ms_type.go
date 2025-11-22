@@ -13,7 +13,5 @@ type ApiConfig struct {
 	ApiUrl      string
 	ApiKey      string
 	ApiProvider ApiProviderType
-	PromptType  PromptType
+	Prompt      string
 }
-
-type ApiConfigOpt func(*ApiConfig) *ApiConfig

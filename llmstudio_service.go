@@ -61,7 +61,7 @@ func (l *LlmStudioService) Generate(input string) (*string, error) {
 		Messages: []LlmStudioGenerateRequestMessage{
 			{
 				Role:    LlmStudioGenerateRequestRoleTypeSystem,
-				Content: aiPromptMapping[l.apiConfig.PromptType],
+				Content: l.apiConfig.Prompt,
 			},
 			{
 				Role:    LlmStudioGenerateRequestRoleTypeUser,
@@ -79,7 +79,6 @@ func (l *LlmStudioService) Generate(input string) (*string, error) {
 }
 
 func NewLlmStudioService(apiConfig *ApiConfig) AiService {
-	apiConfig.PromptType = lo.Ternary(lo.IsEmpty(apiConfig.PromptType), PromptTypeDefault, apiConfig.PromptType)
 	apiConfig.Model = lo.Ternary(lo.IsEmpty(apiConfig.Model), "qwen/qwen3-vl-4b", apiConfig.Model)
 	apiConfig.ApiUrl = lo.Ternary(lo.IsEmpty(apiConfig.ApiUrl), "http://localhost:1234", apiConfig.ApiUrl)
 
