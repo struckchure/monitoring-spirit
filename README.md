@@ -28,6 +28,24 @@ graph TD
     Response --> Output[Print Markdown to Stdout]
 ```
 
+## Quick Install
+
+You can install Monitoring Spirit using the provided installation scripts.
+
+**Linux & macOS**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/struckchure/monitoring-spirit/main/scripts/install.sh | bash
+```
+
+**Windows (PowerShell)**
+
+```powershell
+irm https://raw.githubusercontent.com/struckchure/monitoring-spirit/main/scripts/install.ps1 -OutFile install.ps1
+.\install.ps1
+del install.ps1
+```
+
 ## Installation
 
 Ensure you have Go installed on your machine.
